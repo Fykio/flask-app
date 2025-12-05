@@ -2,6 +2,20 @@ pipeline {
     agent any
 
     stages {
+
+        stage('Checkout Code') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/Fykio/flask-app.git',
+                        credentialsId: 'CI-Demo-GitHub-PAT'
+                    ]]
+                ])
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building...'
